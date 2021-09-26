@@ -1,0 +1,93 @@
+<h2 mat-dialog-title>Create Employee</h2>
+<mat-dialog-content>
+  <div>
+    <form [formGroup]="empFormObj">
+      <div class="row col-12">
+        <div class="col-4">
+          <mat-form-field hintLabel="Max 60 characters" appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput #fName maxlength="60" formControlName="firstName">
+            <mat-hint align="end">{{fName.value?.length || 0}}/60</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field hintLabel="Max 60 characters" appearance="outline">
+            <mat-label>Middle Name</mat-label>
+            <input matInput #mName maxlength="60" formControlName="middleName">
+            <mat-hint align="end">{{mName.value?.length || 0}}/60</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field hintLabel="Max 60 characters" appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput #lName maxlength="60" formControlName="lastName">
+            <mat-hint align="end">{{lName.value?.length || 0}}/60</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row col-12 degree_row">
+        <mat-label>Degree Completed</mat-label>
+        <mat-radio-group (change)="degreeChange($event)" formControlName="isDegreeCompleted">
+          <mat-radio-button value="1">YES</mat-radio-button>
+          <mat-radio-button value="2">NO</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="row col-12" *ngIf="isDegreeEnable">
+        <div class="col-4">
+          <mat-form-field hintLabel="Max 60 characters" appearance="outline">
+            <mat-label>Degree</mat-label>
+            <input matInput #cin maxlength="60" formControlName="certifiedIn">
+            <mat-hint align="end">{{cin.value?.length || 0}}/60</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field hintLabel="Max 60 characters" appearance="outline">
+            <mat-label>Degree Completed In</mat-label>
+            <input matInput #clg maxlength="60" formControlName="college">
+            <mat-hint align="end">{{clg.value?.length || 0}}/60</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field hintLabel="Max 4 digits" appearance="outline">
+            <mat-label>Year Of Completion</mat-label>
+            <input matInput #yr maxlength="4" formControlName="yearOfCompletion">
+            <mat-hint align="end">{{yr.value?.length || 0}}/60</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row col-12 degree_row">
+        <mat-label>Currently Working</mat-label>
+        <mat-radio-group (change)="workChange($event)" formControlName="isCurrentlyWorking">
+          <mat-radio-button value="1">YES</mat-radio-button>
+          <mat-radio-button value="2">NO</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="row col-12" *ngIf="isWorkEnable">
+        <div class="col-4">
+          <mat-form-field hintLabel="Max 60 characters" appearance="outline">
+            <mat-label>Comapany</mat-label>
+            <input matInput #cin maxlength="60" formControlName="current_Off">
+            <mat-hint align="end">{{cin.value?.length || 0}}/60</mat-hint>
+          </mat-form-field>
+        </div>
+        <div class="col-4">
+          <mat-form-field hintLabel="Max 60 characters" appearance="outline">
+            <mat-label>Total Experience</mat-label>
+            <input matInput #clg maxlength="60" formControlName="exp">
+            <mat-hint align="end">{{clg.value?.length || 0}}/60</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row col-12">
+        <mat-form-field class="col-12" hintLabel="Max 60 characters" appearance="outline">
+          <mat-label>Address</mat-label>
+          <textarea matInput #add maxlength="60" formControlName="address"></textarea>
+          <mat-hint align="end">{{add.value?.length || 0}}/60</mat-hint>
+        </mat-form-field>
+      </div>
+      <button type="submit" (click)=saveEmp() class="btn btn-primary">
+        Save
+      </button>
+    </form>
+  </div>
+</mat-dialog-content>
