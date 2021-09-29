@@ -36,13 +36,16 @@ export class AddEmpComponent implements OnInit {
 
   saveEmp() {
     const formValue = this.empFormObj.value;
-
     let isDegreeFormValid = formValue.isDegreeCompleted === '1' ?
       !(!formValue.certifiedIn || !formValue.college || !formValue.yearOfCompletion) : true;
+
     let isWorkFormValid = formValue.isCurrentlyWorking === '1' ?
       !(!formValue.current_Off || !formValue.exp) : true;
 
-    if (this.empFormObj.valid && isDegreeFormValid && isWorkFormValid) {
+    let isFormValid = (formValue.isDegreeCompleted === '1' && formValue.isCurrentlyWorking === '1') ?
+      this.empFormObj.valid : true;
+    
+      if (isFormValid && isDegreeFormValid && isWorkFormValid) {
       let employee: EmployeeDetail = {
         name: this.empFormObj.value.firstName,
         fullName: {
@@ -66,13 +69,17 @@ export class AddEmpComponent implements OnInit {
 
       this.dialogRef.close(employee);
     } else {
-      this.empFormObj.controls.certifiedIn.status = !this.empFormObj.value.certifiedIn ? 'INVALID' : 'VALID';
-      this.empFormObj.controls.college.status = !this.empFormObj.value.college ? 'INVALID' : 'VALID';
-      this.empFormObj.controls.yearOfCompletion.status = !this.empFormObj.value.yearOfCompletion ? 'INVALID' : 'VALID';
-      this.empFormObj.controls.current_Off.status = !this.empFormObj.value.current_Off ? 'INVALID' : 'VALID';
-      this.empFormObj.controls.exp.status = !this.empFormObj.value.exp ? 'INVALID' : 'VALID';
+      this.customFormValid(formValue);
       return;
     }
+  }
+
+  customFormValid(formValue) {
+    this.empFormObj.controls.certifiedIn.status = formValue.isDegreeCompleted === '1' && !this.empFormObj.value.certifiedIn ? 'INVALID' : 'VALID';
+    this.empFormObj.controls.college.status = formValue.isDegreeCompleted === '1' && !this.empFormObj.value.college ? 'INVALID' : 'VALID';
+    this.empFormObj.controls.yearOfCompletion.status = formValue.isDegreeCompleted === '1' && !this.empFormObj.value.yearOfCompletion ? 'INVALID' : 'VALID';
+    this.empFormObj.controls.current_Off.status = formValue.isCurrentlyWorking === '1' && !this.empFormObj.value.current_Off ? 'INVALID' : 'VALID';
+    this.empFormObj.controls.exp.status = formValue.isCurrentlyWorking === '1' && !this.empFormObj.value.exp ? 'INVALID' : 'VALID';
   }
 
   degreeChange(event) {
