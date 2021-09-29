@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEmpComponent } from './add-emp/add-emp.component';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +26,9 @@ export class AppComponent {
   columnsToDisplay = ['action', 'name', 'isDegreeCompleted', 'isCurrentlyWorking', 'address'];
   expandedElement: EmployeeDetail | null;
   @ViewChild(MatTable) table: MatTable<EmployeeDetail>;
+  @ViewChild('sort', { static: true }) sort: MatSort;
+  @ViewChild('paginator', { static: true }) paginator: MatPaginator;
+
   constructor(
     private service: AppService,
     public dialog: MatDialog
@@ -33,7 +38,6 @@ export class AppComponent {
   getData() {
     this.isLoading = true;
     this.service.getData().subscribe((response: any) => {
-      console.log('response = ', response);
       let responseData: EmployeeDetail[] = [];
       if (response) {
         setTimeout(() => {
@@ -50,6 +54,8 @@ export class AppComponent {
             responseData.push(emp);
           });
           this.dataSource = new MatTableDataSource<EmployeeDetail>(responseData);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
           this.isLoading = false;
         }, 1000);
       }
@@ -65,6 +71,8 @@ export class AppComponent {
         this.isLoading = true;
         setTimeout(() => {
           this.dataSource.data.push(result);
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
           this.table.renderRows();
           this.isLoading = false;
         }, 500);

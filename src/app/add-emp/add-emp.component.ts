@@ -26,7 +26,7 @@ export class AddEmpComponent implements OnInit {
       isDegreeCompleted: ['1'],
       certifiedIn: ['', [Validators.maxLength(60), Validators.pattern('^[A-Za-z0-9" "]*$')]],
       college: ['', [Validators.maxLength(60), Validators.pattern('^[A-Za-z0-9" "]*$')]],
-      yearOfCompletion: ['', [Validators.maxLength(60), Validators.pattern('^[0-9]{4}$')]],
+      yearOfCompletion: ['', [Validators.maxLength(4)]],
       isCurrentlyWorking: ['1'],
       current_Off: ['', [Validators.maxLength(60), Validators.pattern('^[A-Za-z0-9" "]*$')]],
       exp: ['', [Validators.maxLength(60), Validators.pattern('^[A-Za-z0-9" "]*$')]],
@@ -36,48 +36,50 @@ export class AddEmpComponent implements OnInit {
 
   saveEmp() {
     const formValue = this.empFormObj.value;
-    if (this.empFormObj.invalid) {
+
+    let isDegreeFormValid = formValue.isDegreeCompleted === '1' ?
+      !(!formValue.certifiedIn || !formValue.college || !formValue.yearOfCompletion) : true;
+    let isWorkFormValid = formValue.isCurrentlyWorking === '1' ?
+      !(!formValue.current_Off || !formValue.exp) : true;
+
+    if (this.empFormObj.valid && isDegreeFormValid && isWorkFormValid) {
+      let employee: EmployeeDetail = {
+        name: this.empFormObj.value.firstName,
+        fullName: {
+          firstName: this.empFormObj.value.firstName,
+          middleName: this.empFormObj.value.middleName,
+          lastName: this.empFormObj.value.lastName
+        },
+        isDegreeCompleted: this.empFormObj.value.isDegreeCompleted === '1' ? true : false,
+        qualification: {
+          certifiedIn: this.empFormObj.value.isDegreeCompleted === '1' ? this.empFormObj.value.certifiedIn : '',
+          college: this.empFormObj.value.isDegreeCompleted === '1' ? this.empFormObj.value.college : '',
+          yearOfCompletion: this.empFormObj.value.isDegreeCompleted === '1' ? this.empFormObj.value.yearOfCompletion : '',
+        },
+        isCurrentlyWorking: this.empFormObj.value.isCurrentlyWorking === '1' ? true : false,
+        workExp: {
+          current_Off: this.empFormObj.value.isCurrentlyWorking === '1' ? this.empFormObj.value.current_Off : '',
+          exp: this.empFormObj.value.isCurrentlyWorking === '1' ? this.empFormObj.value.exp : '',
+        },
+        address: this.empFormObj.value.address
+      };
+
+      this.dialogRef.close(employee);
+    } else {
+      this.empFormObj.controls.certifiedIn.status = !this.empFormObj.value.certifiedIn ? 'INVALID' : 'VALID';
+      this.empFormObj.controls.college.status = !this.empFormObj.value.college ? 'INVALID' : 'VALID';
+      this.empFormObj.controls.yearOfCompletion.status = !this.empFormObj.value.yearOfCompletion ? 'INVALID' : 'VALID';
+      this.empFormObj.controls.current_Off.status = !this.empFormObj.value.current_Off ? 'INVALID' : 'VALID';
+      this.empFormObj.controls.exp.status = !this.empFormObj.value.exp ? 'INVALID' : 'VALID';
       return;
     }
-
-    if (formValue.isDegreeCompleted === '1' && (!formValue.certifiedIn || !formValue.college || !formValue.yearOfCompletion)) {
-      return;
-    }
-
-    if (formValue.isCurrentlyWorking === '1' && (!formValue.current_Off || !formValue.exp)) {
-      return;
-    }
-    let employee: EmployeeDetail = {
-      name: this.empFormObj.value.firstName,
-      fullName: {
-        firstName: this.empFormObj.value.firstName,
-        middleName: this.empFormObj.value.middleName,
-        lastName: this.empFormObj.value.lastName
-      },
-      isDegreeCompleted: this.empFormObj.value.isDegreeCompleted === '1' ? true : false,
-      qualification: {
-        certifiedIn: this.empFormObj.value.isDegreeCompleted === '1' ? this.empFormObj.value.certifiedIn : '',
-        college: this.empFormObj.value.isDegreeCompleted === '1' ? this.empFormObj.value.college : '',
-        yearOfCompletion: this.empFormObj.value.isDegreeCompleted === '1' ? this.empFormObj.value.yearOfCompletion : '',
-      },
-      isCurrentlyWorking: this.empFormObj.value.isCurrentlyWorking === '1' ? true : false,
-      workExp: {
-        current_Off: this.empFormObj.value.isCurrentlyWorking === '1' ? this.empFormObj.value.current_Off : '',
-        exp: this.empFormObj.value.isCurrentlyWorking === '1' ? this.empFormObj.value.exp : '',
-      },
-      address: this.empFormObj.value.address
-    };
-
-    this.dialogRef.close(employee);
   }
 
   degreeChange(event) {
-    console.log(event);
     this.isDegreeEnable = event.value === '1' ? true : false;
   }
 
   workChange(event) {
-    console.log(event);
     this.isWorkEnable = event.value === '1' ? true : false;
   }
 }

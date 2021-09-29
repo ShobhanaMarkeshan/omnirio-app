@@ -13,7 +13,8 @@
   </div>
 
   <div class="p-4">
-    <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort multiTemplateDataRows #sort="matSort" matSortActive="name"
+      matSortDirection="asc">
       <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
         <ng-container *ngIf="column !== 'action'; else action">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column}} </th>
@@ -95,8 +96,12 @@
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row">
       </tr>
     </table>
-    <div class="mat-elevation-z8 no_record" *ngIf="!isLoading && !dataSource.filteredData.length"> No Records Found..</div>
   </div>
+  <div class="mat-elevation-z8 no_record" *ngIf="!isLoading && !dataSource.filteredData.length">
+    No Records Found..
+  </div>
+  <mat-paginator #paginator [length]="dataSource && dataSource.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25]"
+    showFirstLastButtons></mat-paginator>
   <div *ngIf="isLoading" class="loader">
     <mat-spinner [diameter]=50></mat-spinner>
   </div>

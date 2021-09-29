@@ -8,7 +8,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -36,6 +37,8 @@ import { AddEmpComponent } from './add-emp/add-emp.component';
     MatRadioModule,
     MatFormFieldModule,
     MatProgressSpinnerModule,
+    MatSortModule,
+    MatPaginatorModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule
