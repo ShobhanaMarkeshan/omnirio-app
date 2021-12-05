@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddEmpComponent } from './add-emp/add-emp.component';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+// import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -33,8 +34,36 @@ export class AppComponent {
     private service: AppService,
     public dialog: MatDialog
   ) {
+    // console.log('contructor');
     this.getData();
   }
+
+  ngOnInit() {
+    // console.log('onInit');
+    // Create simple observable that emits three values
+    // const myObservable = of(1, 2, 3);
+
+    // Create observer object
+    // const myObserver = {
+    //   next: x => console.log('Observer got a next value: ' + x),
+    //   error: err => console.error('Observer got an error: ' + err),
+    //   complete: () => console.log('Observer got a complete notification'),
+    // };
+
+    // Execute with the observer object
+    // myObservable.subscribe(myObserver);
+    // Logs:
+    // Observer got a next value: 1
+    // Observer got a next value: 2
+    // Observer got a next value: 3
+    // Observer got a complete notification
+  }
+
+  // ngOnChanges(){
+  //   console.log('ngOnChanges');
+
+  // }
+
   getData() {
     this.isLoading = true;
     this.service.getData().subscribe((response: any) => {
