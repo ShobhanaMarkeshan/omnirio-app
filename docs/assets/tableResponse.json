@@ -1,0 +1,45 @@
+[
+    {
+        "nickName": "Veena",
+        "fullName": {
+            "firstName": "Veena",
+            "middleName": "Markeshan",
+            "lastName": "M"
+        },
+        "isDegreeCompleted": true,
+        "qualification": {
+            "certifiedIn": "B.E",
+            "college": "Anna University",
+            "yearOfCompletion": 2016
+        },
+        "isCurrentlyWorking": true,
+        "workExp": {
+            "current_Off": "L&T",
+            "exp": "5 yrs"
+        },
+        "currentLocation": "Chennai",
+        "address": {
+            "floor": "Shruthi Nilaya",
+            "street": "1st cross",
+            "pin_code": "600001"
+        }
+    },
+    {
+        "nickName": "John",
+        "fullName": {
+            "firstName": "John",
+            "middleName": "Martin",
+            "lastName": "Max"
+        },
+        "isDegreeCompleted": false,
+        "qualification": {},
+        "isCurrentlyWorking": false,
+        "workExp": {},
+        "currentLocation": "Tamil Nadu",
+        "address": {
+            "floor": "Shruthi Nilaya",
+            "street": "1st cross",
+            "pin_code": "600001"
+        }
+    }
+]
